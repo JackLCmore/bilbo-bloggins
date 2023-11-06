@@ -1,5 +1,6 @@
 {
-  "scripts":{
+  "scripts": {
+    "start": "node server.js",
     "seed": "node seeds/index.js"
   },
   "dependencies": {

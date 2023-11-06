@@ -1,22 +1,30 @@
 const path = require('path');
 const express = require('express');
 const session = require('express-session');
-const hb = require('express-handlebars');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
-const routes = require('./controllers.js');
+const routes = require('./controllers');
 const sequelize = require('./config/connection');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-const sesh = {};
+const sesh = {
+secret: 'Super secret secret',
+cookie: {},
+//https://www.npmjs.com/package/express-session#resave
+//Forces the session to be saved back to the session store, even if the session was never modified during the request.
+resave: false,
+//https://www.npmjs.com/package/express-session#saveuninitialized
+//Forces a session that is "uninitialized" to be saved to the store. A session is uninitialized when it is new but not modified.
+saveUninitialized: false,
+store: new SequelizeStore({
+  db: sequelize,
+}),
+};
 
 app.use(session(sesh));
 
-const hbs = hb.create({helpers});
-
-app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 
 app.use(express.json());

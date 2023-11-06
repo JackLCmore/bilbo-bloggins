@@ -11,14 +11,10 @@ Comment.init(
       primaryKey: true,
       autoIncrement: true,
     },
-  },
-  {
     text: {
       type: DataTypes.TEXT,
       allowNull: false,
     },
-  },
-  {
     post_id:{
         type: DataTypes.INTEGER,
         references: {
@@ -26,8 +22,6 @@ Comment.init(
             key: 'id',
         },
     },
-  },
-  {
     user_id:{
         type: DataTypes.INTEGER,
         references: {
