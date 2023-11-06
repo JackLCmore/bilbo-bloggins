@@ -2,7 +2,7 @@ const router = require('express').Router();
 const { Comment, Post } = require('../models');
 
 //GET all posts for the shire
-router.get('/', async (req,res)=>{
+router.get('/posts', async (req,res)=>{
     try{
         const dbPostData = await Post.findAll({
             include:[
@@ -28,7 +28,7 @@ router.get('/', async (req,res)=>{
 });
 
 // GET one Post
-router.get('/post/:id', async (req,res)=>{
+router.get('/posts/:id', async (req,res)=>{
     try{
         const dbPostData = await Post.findByPk(req.params.id, {
             include: [
@@ -53,7 +53,7 @@ router.get('/post/:id', async (req,res)=>{
 
 // GET all comments for one(?) post
 
-router.get('/', async (req, res)=>{
+router.get('/comments', async (req, res)=>{
     try{
         const dbCommentData = await Comment.findAll(req.params.post_id);
 
@@ -66,7 +66,7 @@ router.get('/', async (req, res)=>{
 });
 
 // GET all posts from one user
-router.get('/user/:id', async (req,res)=>{
+router.get('/users/:id', async (req,res)=>{
 try{
 const dbUserPosts = await Post.findAll({
     include:[
