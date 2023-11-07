@@ -1,5 +1,6 @@
 const path = require('path');
 const express = require('express');
+const exphbs = require('express-handlebars');
 const session = require('express-session');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
@@ -11,7 +12,9 @@ const PORT = process.env.PORT || 3001;
 
 const sesh = {
 secret: 'Super secret secret',
-cookie: {},
+cookie: {
+  maxAge: 36000
+},
 //https://www.npmjs.com/package/express-session#resave
 //Forces the session to be saved back to the session store, even if the session was never modified during the request.
 resave: false,
@@ -23,8 +26,11 @@ store: new SequelizeStore({
 }),
 };
 
+const hbs = exphbs.create();
+
 app.use(session(sesh));
 
+app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 
 app.use(express.json());

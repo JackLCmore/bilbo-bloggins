@@ -1,93 +1,44 @@
 const router = require('express').Router();
 const { Comment, Post } = require('../models');
 
-//GET all posts for the shire
-router.get('/posts', async (req,res)=>{
+const { withAuth, areAuth } = require('../utils/auth');
+
+router.get('/', async (req,res) => {
     try{
-        const dbPostData = await Post.findAll({
-            include:[
-                {
-                    model: Comment,
-                    attributes: ['text', 'user_id']
-                },
-            ],
-        });
-
-        const posts = dbPostData.map((post)=>
-        post.get({plain: true})
-        );
-
-        res.render('the_shire', {
-            posts,
+        const postData = await Post.findAll();
+    
+        const post = (postData).map((post)=> post.dataValues);
+    console.log(post);
+        res.render('theShire', {
+            post,
             loggedIn: req.session.loggedIn,
         });
-
     }catch(err){
-        res.status(500).json(err);
-    }
-});
-
-// GET one Post
-router.get('/posts/:id', async (req,res)=>{
-    try{
-        const dbPostData = await Post.findByPk(req.params.id, {
-            include: [
-              {
-                model: Comment,
-                attributes: [
-                  'id',
-                  'text',
-                  'post_id',
-                  'user_id',
-                ],
-              },
-            ],
-          });
-
-          const post = dbPostData.get({plain:true});
-          res.render('post', { post, loggedIn: req.session.loggedIn});
-    }catch(err){
-        res.status(500).json(err);
-    }
-});
-
-// GET all comments for one(?) post
-
-router.get('/comments', async (req, res)=>{
-    try{
-        const dbCommentData = await Comment.findAll(req.params.post_id);
-
-        const comment = dbCommentData.get({plain:true});
-
-        res.render('comment', {comment, loggedIn: req.session.loggedIn });
-    }catch(err){
-        res.status(500).json(err);
-    }
-});
-
-// GET all posts from one user
-router.get('/users/:id', async (req,res)=>{
-try{
-const dbUserPosts = await Post.findAll({
-    include:[
-        {
-            model: Comment,
-            attributes: ['text', 'user_id']
-        },
-    ],
-});
-
-const posts = dbUserPosts.map((post)=>
-        post.get({plain: true})
-        );
-
-        res.render('dashboard', {
-            posts,
-            loggedIn: req.session.loggedIn,
-        });
-}catch(err){
     res.status(500).json(err);
-}
+    }
+    });
+
+router.get('/login', areAuth, (req, res) => {
+    if (req.session.loggedIn) {
+      res.redirect('/');
+      return;
+    }
+  
+    res.render('login');
+  });
+
+router.get('/dashboard', withAuth, async (req, res) => {
+    const postData = await Post.findAll({
+        where:{
+            user_id: req.session.user_id
+        },
+    });
+    
+    const post = (postData).map((post)=> post.dataValues);
+    res.render('dashboard', {
+        post,
+        loggedIn: req.session.loggedIn,
+    });
 });
 
 module.exports = router;

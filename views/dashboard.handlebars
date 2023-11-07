@@ -1,0 +1,16 @@
+<h1>Dashboard</h1>
+<div class="container">
+<div class="mb-3">
+  <label for="titleInput" class="form-label">Title</label>
+  <input type="input" class="form-control" id="titleInput" placeholder="title">
+</div>
+<div class="mb-3">
+  <label for="textContent" class="form-label">Text</label>
+  <textarea class="form-control" id="textContent" rows="3"></textarea>
+</div>
+<button id="dashboardSubmit" type="button" class="btn btn-primary">Submit</button>
+</div>
+{{#each post}}
+{{>allposts}}
+{{/each}}
+<script src="./js/dashboard.js"></script>
