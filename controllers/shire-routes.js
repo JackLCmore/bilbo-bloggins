@@ -41,4 +41,23 @@ router.get('/dashboard', withAuth, async (req, res) => {
     });
 });
 
+router.get('/comments', withAuth, async (req,res)=>{
+    const commentData = await Comment.findAll({
+        // where:{
+        //     post_id: req.session.post
+        // }
+    });
+
+    // const postData = await Post.findByPk({
+
+    // });
+
+    const comment = (commentData).map((comment)=> comment.dataValues);
+    res.render('comments', {
+        comment,
+        // postData,
+        loggedIn: req.session.loggedIn
+    });
+});
+
 module.exports = router;

@@ -14,7 +14,7 @@ const PORT = process.env.PORT || 3001;
 const sesh = {
 secret: 'Super secret secret',
 cookie: {
-  maxAge: 36000
+  maxAge: 7200000
 },
 //https://www.npmjs.com/package/express-session#resave
 //Forces the session to be saved back to the session store, even if the session was never modified during the request.

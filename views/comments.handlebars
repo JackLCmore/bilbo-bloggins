@@ -1,9 +1,8 @@
 <div id="post-submission" class="container">
-<h1>Create A Post</h1>
-<div class="mb-3">
-  <label for="titleInput" class="form-label">Title</label>
-  <input type="input" class="form-control" id="titleInput" placeholder="title">
-</div>
+
+{{postData}}
+
+<h1>Add a comment!</h1>
 <div class="mb-3">
   <label for="textContent" class="form-label">Text</label>
   <textarea class="form-control" id="textContent" rows="3"></textarea>
@@ -11,4 +10,8 @@
 <button id="dashboardSubmit" type="button" class="btn btn-success">Submit</button>
 </div>
 
-<script src="./js/dashboard.js"></script>
+{{#each comment}}
+{{>allcomments}}
+{{/each}}
+
+<script src="./js/comments.js"></script>
