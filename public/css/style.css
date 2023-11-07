@@ -1,0 +1,39 @@
+#background{
+    background-image: url("../images/theshire.jpg");
+    background-size: cover;
+}
+
+#post{
+    margin-top: 2%;
+    background-color: rgb(117, 62, 69);
+    color: white;
+    border-radius: 10px;
+    border: solid gold 5px;
+}
+
+#navbar{
+    background-color:rgb(117, 62, 69);
+    border-bottom: solid gold 5px;
+}
+
+#post-submission{
+    margin-top: 2%;
+    padding: 2%;
+    background-color: rgb(117, 62, 69);
+    color: white;
+    border-radius: 10px;
+    border: solid gold 5px;
+}
+
+#login{
+    margin-top: 2%;
+    padding: 2%;
+    background-color: rgb(117, 62, 69);
+    color: white;
+    border-radius: 10px;
+    border: solid gold 5px;
+}
+
+.white-text{
+    color:white;
+}
