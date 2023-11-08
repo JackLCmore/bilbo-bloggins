@@ -12,4 +12,4 @@ const response = await fetch('/api/posts/:id', {
   } else {
     alert('Failed to find comments for this post.');
   }
-})
+});

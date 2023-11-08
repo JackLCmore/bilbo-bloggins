@@ -6,12 +6,15 @@ const { withAuth, areAuth } = require('../utils/auth');
 router.get('/', async (req,res) => {
     try{
         const postData = await Post.findAll();
-    
+        // console.log(postData)
         const post = (postData).map((post)=> post.dataValues);
-    console.log(post);
+    // console.log(post);
+        const isTheShire = true;
+        
         res.render('theShire', {
             post,
             loggedIn: req.session.loggedIn,
+            isTheShire,
         });
     }catch(err){
     res.status(500).json(err);
@@ -41,21 +44,21 @@ router.get('/dashboard', withAuth, async (req, res) => {
     });
 });
 
-router.get('/comments', withAuth, async (req,res)=>{
+router.get('/comments/:id', withAuth, async (req,res)=>{
     const commentData = await Comment.findAll({
-        // where:{
-        //     post_id: req.session.post
-        // }
+        where:{
+            post_id: req.params.id
+        }
     });
 
-    // const postData = await Post.findByPk({
-
-    // });
-
+    const postData = await Post.findByPk(req.params.id);
+    
     const comment = (commentData).map((comment)=> comment.dataValues);
+    const post = postData.dataValues;
+    console.log(post);
     res.render('comments', {
         comment,
-        // postData,
+        post,
         loggedIn: req.session.loggedIn
     });
 });

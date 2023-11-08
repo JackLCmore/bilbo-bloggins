@@ -15,25 +15,4 @@ router.post('/', async (req, res) => {
     }
   });
 
-router.get('/:id', async (req, res) =>{
-  try{
-    const postData = await Post.findByPk(req.params.id, {
-      include: [
-        {
-          model: Comment,
-          attributes: [
-            "id",
-            "text",
-            "user_id"
-          ],
-        },
-      ],
-    });
-    const post = postData.get({ plain: true });
-    res.render('commentPage', { post, loggedIn: req.session.loggedIn });
-  }catch(err){
-    res.status(200).json(err);
-  }
-});
-
 module.exports = router;
