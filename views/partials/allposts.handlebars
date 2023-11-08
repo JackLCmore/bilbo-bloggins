@@ -1,11 +1,15 @@
 <div id="post" class="row align-center mb-5 container">
-  <a class="white-text" href="/comments/{{id}}">
+  
   <div class="col-md-6">
-    <h2>Title: {{title}}</h2>
-    <p>Created At:{{format_date createdAt}}</p>
+    <a class="white-text" href="/comments/{{id}}">
+    <h2>Title: {{title}}</h2></a>
+    <p>Created At: {{format_date createdAt}}</p>
   </div>
   <div class="col-md-6">
     <p>{{text}}</p>
   </div>
-  </a>
+  {{#if isDashboard}}
+  <button type="button" class="delete btn btn-danger" data-id="{{id}}">Del</button>
+  {{/if}}
+
 </div>

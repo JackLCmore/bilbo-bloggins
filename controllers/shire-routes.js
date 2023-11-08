@@ -37,10 +37,12 @@ router.get('/dashboard', withAuth, async (req, res) => {
         },
     });
     
+    
+
     const post = (postData).map((post)=> post.dataValues);
     res.render('dashboard', {
         post,
-        loggedIn: req.session.loggedIn,
+        loggedIn: req.session.loggedIn
     });
 });
 
@@ -50,12 +52,12 @@ router.get('/comments/:id', withAuth, async (req,res)=>{
             post_id: req.params.id
         }
     });
-
+    // console.log(commentData);
     const postData = await Post.findByPk(req.params.id);
     
     const comment = (commentData).map((comment)=> comment.dataValues);
     const post = postData.dataValues;
-    console.log(post);
+    // console.log(post);
     res.render('comments', {
         comment,
         post,
